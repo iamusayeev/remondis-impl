@@ -14,7 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final Mapper<UserDto,UserEntity> mapDtoToEntity;
-
+    private final Mapper<UserEntity, UserDto> mapEntityToDto;
 
     public void save(UserDto userDto) {
         UserEntity userEntity = mapDtoToEntity.map(userDto);
@@ -22,14 +22,13 @@ public class UserService {
     }
 
 
-//    public UserDto findById(Integer id) {
-//        UserEntity userEntity = fetchUserIfExist(id);
-//
-//
-//        return userDto;
-//    }
+    public UserDto findById(Long id) {
+        UserEntity userEntity = fetchUserIfExist(id);
+        UserDto userDto = mapEntityToDto.map(userEntity);
+        return userDto;
+    }
 
-    private UserEntity fetchUserIfExist(Integer id) {
+    private UserEntity fetchUserIfExist(Long id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
