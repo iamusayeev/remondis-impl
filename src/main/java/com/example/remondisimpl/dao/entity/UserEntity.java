@@ -1,9 +1,8 @@
 package com.example.remondisimpl.dao.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import com.example.remondisimpl.model.Role;
+import model.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class UserEntity {
 
 
@@ -24,9 +24,15 @@ public class UserEntity {
     private String name;
     private String email;
     private String password;
+    private String smth;
     private LocalDate birthday;
-    private String role;
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private AccountEntity account;
+
 
 
 }
